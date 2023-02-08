@@ -9,27 +9,24 @@ from transformers import Wav2Vec2ForCTC, Wav2Vec2Tokenizer
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 import threading
-#from keras.utils import to_categorical
-#from scipy.special import softmax
 import os
 import shutil
 import torch
 import cv2
 from FaceAnimationRenderer import FaceAnimationRenderer
 from sklearn.preprocessing import MinMaxScaler
+import argparse
 
 #tf.config.set_visible_devices([], 'GPU')
+
 def softmax(x):
     return np.exp(x) / np.sum(np.exp(x), axis=0)
 
-def denormalize_mouth(y_mouth_norm):
-    y_mouth = y_mouth_norm*9.932146 - 5.5546255
-    return y_mouth
-def denormalize_eyes(y_eyes_norm):
-    y_eyes = y_eyes_norm*12.494246 - 5.6491327
-    return y_eyes
+parser = argparse.ArgumentParser()
+parser.add_argument("model_path", help="Path to the wave2vec-param-model file")
+args = parser.parse_args()
 
-
+#normalize animation param
 scaler_mouth = MinMaxScaler()
 scaler_eye = MinMaxScaler()
 scaled_y_mouth = scaler_mouth.fit_transform(np.load('data/mouth_31_32_1195.npy'))
@@ -96,7 +93,7 @@ class ProcessingThread2(threading.Thread):
 
     self.running = False
     self.recorder = recorder
-    self.model_w2v2animation = load_model('w2v/model/sofmax_1relu-2sig-1linear.h5')
+    self.model_w2v2animation = load_model(args.model_path)
     self.count = 1
     self.model = model
     self.tokenizer = tokenizer
@@ -142,20 +139,12 @@ class ProcessingThread2(threading.Thread):
             for i in range(logits.shape[1]):
                logits[0][i] = softmax(logits[0][i])
             animation_model_in = np.array(logits)
-
-            #32d to 33d
-            #animation_model_in = np.append(np.expand_dims(animation_model_in[:,-1,:], axis=0), animation_model_in, axis=1)
-
-
             # the prediction of current animation parameters
             mouth_animation_param, eye_animation_param = self.model_w2v2animation.predict(animation_model_in)
-            #norm1
-            #mouth_animation_param = denormalize_mouth(mouth_animation_param)
-            #eye_animation_param = denormalize_eyes(eye_animation_param)
-            #norm2
+
+            #unnormalize animation param
             mouth_animation_param = scaler_mouth.inverse_transform(mouth_animation_param)
             eye_animation_param = scaler_eye.inverse_transform(eye_animation_param)
-
             # print(mouth_animation_param.shape, eye_animation_param.shape)
             self.mouth_animation_param_list += [mouth_animation_param]
             self.eye_animation_param_list += [eye_animation_param]
