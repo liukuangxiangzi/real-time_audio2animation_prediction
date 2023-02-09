@@ -35,14 +35,15 @@ Note: Make sure FaceAnimationRenderer.py is in the root directory.
 #### 4. Run command line:<br>
 ```python realtime_w2v_animation_render.py w2v/model/model_name.h5``` <br>
 
-### viseme IDs Method
+### Viseme IDs Method
 #### 1.  Create and install required envs and packages according to environment and set-up sections.
 #### 2. Download this repository to your local machine <br>
 ```git clone https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git ```<br>
 #### 3. Prepare data and model:<br>
-- download the viseme IDs prediction model from [HERE](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put the file to data/. They are used for the unnormalization.
-- download the animation parameters prediction models from [HERE](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put all 4 files to w2v/model/.
-  
+- download the animation model from [HERE](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put the folder to the root directory.
+- download the viseme IDs prediction model and the animation parameters prediction model from [HERE](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put files to visemeID/model/.
+#### 4. Run command line:<br>
+```python realtime_visemeID_animation_render.py visemeID/model/audio-visemeID-model_name.h5 visemeID/model/visemeID-param-model_name.h5``` <br>
 
 
 ## Train
