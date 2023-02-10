@@ -43,8 +43,9 @@ or <br>
 
 ## Training
 ### Input/Output
-- Input data: download the Log-Mel spectrogram features from [HERE](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), Wav2Vec 2.0 features from [HERE](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git).
-- Output data: download animation parameters from [HERE](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git).
+- Input data: download the phoneme from [phones](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), Wav2Vec 2.0 features from [wave2vec](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git).
+- Output data: download animation parameters from [animation-params](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git).
+- Put 3 downloaded folders to data/.
 ### Data processing
 Run the data processing script: <br>
 ```python realtime_data_process.py ```
