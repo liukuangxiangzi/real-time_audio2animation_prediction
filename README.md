@@ -23,32 +23,32 @@ Download FFmpeg packages & executable files from
 and add the FFmpeg binary directory to path.<br>
 
 ## At test time:
-### Wave2Vec2.0 Method
+
 #### 1. Create and install required envs and packages according to environment and set-up sections.
 #### 2. Download this repository to your local machine <br>
 ```git clone https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git ```<br>
 Note: Make sure FaceAnimationRenderer.py is in the root directory.
-#### 3. Prepare data and model:<br>
-- download the animation model from [HERE](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put the folder to the root directory.
+#### 3. Download the animation model folder from [HERE](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put the folder to the root directory.
+#### 4. Prepare data and test model:<br>
+#### Wave2Vec2.0 Method
 - download the animation parameters prediction models from [HERE](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put all 4 files to w2v/model/.
 - download the animation parameters of the eyes and mouth [HERE](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put all 2 files to data/. They are used for the unnormalization.
+#### Viseme IDs Method
+- download the viseme IDs prediction model and the animation parameters prediction model from [HERE](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put the files to visemeID/model/.
 #### 4. Run command line:<br>
 ```python realtime_w2v_animation_render.py w2v/model/model_name.h5``` <br>
-
-### Viseme IDs Method
-#### 1.  Create and install required envs and packages according to environment and set-up sections.
-#### 2. Download this repository to your local machine <br>
-```git clone https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git ```<br>
-#### 3. Prepare data and model:<br>
-- download the animation model from [HERE](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put the folder to the root directory.
-- download the viseme IDs prediction model and the animation parameters prediction model from [HERE](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put files to visemeID/model/.
-#### 4. Run command line:<br>
+or <br>
 ```python realtime_visemeID_animation_render.py visemeID/model/audio-visemeID-model_name.h5 visemeID/model/visemeID-param-model_name.h5``` <br>
 
 
-## Train
-1. The data for this project includes Log-Mel spectrogram features, Wav2Vec 2.0 features and animation parameters.  They can be found at [link to data source].
-2. Run the data processing script: 'python realtime_data_process.py'
+## Training
+### Input/Output
+- Input data: download the Log-Mel spectrogram features from [HERE](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), Wav2Vec 2.0 features from [HERE](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git).
+- Output data: download animation parameters from [HERE](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git).
+### Data processing
+Run the data processing script: <br>
+```python realtime_data_process.py ```
+
 ### Wave2Vec2.0 Method
 1. Run the model training script: 'python train_w2v_to_AniPara.py' to train a CNN model.
 2. Run the model training script: 'python train_w2v_to_AniPara_preAniPara.py' to train a CNN model. The input takes additional previously predicted animation parameters.
