@@ -54,17 +54,18 @@ Process wave2vec features data <br>
 Calculate the softmax of wave2vec data <br>
 ```python realtime_data_process.py softmax_data -d data/wave2vec/wave2vec.npy```<br>
 Process animation params for eyes and mouth <br>
-``` python realtime_data_process.py append_np_data -d data/animation-params/eyes```<br>
+```python realtime_data_process.py append_np_data -d data/animation-params/eyes```<br>
 ```python realtime_data_process.py append_np_data -d data/animation-params/mouth```<br>
 Normalize animation params for eyes and mouth <br>
-``` python realtime_data_process.py data_Normalization -d data/animation-params/eyes/eyes.npy```<br>
-``` python realtime_data_process.py data_Normalization -d data/animation-params/mouth/mouth.npy```<br>
+```python realtime_data_process.py data_Normalization -d data/animation-params/eyes/eyes.npy```<br>
+```python realtime_data_process.py data_Normalization -d data/animation-params/mouth/mouth.npy```<br>
 Divide train and test datase <br>
 ```python realtime_data_process.py make_train_test_dataset -d data/phones/viseme_ID.npy```<br>
 ```python realtime_data_process.py make_train_test_dataset -d data/wave2vec/wave2vec_softmax.npy```<br>
 ```python realtime_data_process.py make_train_test_dataset -d data/animation-params/mouth/scaled_mouth.npy```<br>
 ```python realtime_data_process.py make_train_test_dataset -d data/animation-params/eyes/scaled_eyes.npy```<br>
-Training
+
+### Training
 #### Wave2Vec2.0 Method
 1. Run the model training script: 'python train_w2v_to_AniPara.py' to train a CNN model.
 2. Run the model training script: 'python train_w2v_to_AniPara_preAniPara.py' to train a CNN model. The input takes additional previously predicted animation parameters.
