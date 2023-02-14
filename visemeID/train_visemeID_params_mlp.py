@@ -72,12 +72,12 @@ def train_model(model, x_train, y_mouth_train, y_eye_train, x_test, y_mouth_test
                         callbacks=[tbCallBack],
                         shuffle=True)
     # Plot model structure
-    plot_model(model, to_file='model_visemeID_params_plot.png', show_shapes=True, show_layer_names=True)
+    plot_model(model, to_file='model_visemeID_params_mlp_plot.png', show_shapes=True, show_layer_names=True)
     # Log loss to console and file
     logging.info('Training loss: m_out={:.4f}, e_out={:.4f}'.format(history.history['m_out_loss'][-1], history.history['e_out_loss'][-1]))
     logging.info('Validation loss: m_out={:.4f}, e_out={:.4f}'.format(history.history['val_m_out_loss'][-1], history.history['val_e_out_loss'][-1]))
     # Save model to file
-    model.save(os.path.join(save_model_dir, 'mlp_epoch{}_bs{}.h5'.format(epochs, batch_size)))
+    model.save(os.path.join(save_model_dir, 'visemeID_mlp_epoch{}_bs{}.h5'.format(epochs, batch_size)))
     logging.info('Model saved to {}'.format(save_model_dir))
 
 

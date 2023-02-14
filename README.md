@@ -68,12 +68,19 @@ Divide train and test datase for viseme ID, Wave2vec feature and eyes/mouth anim
 ```python realtime_data_process.py make_train_test_dataset -d data/animation-params/eyes/scaled_eyes.npy```<br>
 
 ### Training
-#### Wave2Vec2.0 Method
-1. Run the model training script: 'python train_w2v_to_AniPara.py' to train a CNN model.
-2. Run the model training script: 'python train_w2v_to_AniPara_preAniPara.py' to train a CNN model. The input takes additional previously predicted animation parameters.
-3. Run the model training script: 'python train_w2v_to_AniPara_selfattention.py' to train a CNN model with additional self-attention layers.
 #### viseme IDs Method
-1. Run the model training script: 'python train_visemeID_to_AniPara_MLP.py' to train an MLP model. 
-2. Run the model training script: 'python train_visemeID_to_AniPara_MLP.py' to train a CNN model.
+Train MLP model with default arguments<br>
+```python visemeID/train_visemeID_params_mlp.py --epochs 300 --batch-size 32```<br>
+Train MLP model with your own arguments<br>
+```python visemeID/train_visemeID_params_mlp.py --train-input-data-dir path/to/train_visemeID --test-input-data-dir path/to/test_viseme_ID --train-eyes-data-dir path/to/train_eyes_param --test-eyes-data-dir path/to/test_eyes_param --train-mouth-data-dir path/to/train_mouth_param --test-mouth-data-dir path/to/test_mouth_param --epochs 300 --batch-size 32 --resume-training False --save-model-dir path/to/model/ --load-model-dir path/to/model/```
+Train CNN model with default arguments<br>
+```python visemeID/train_visemeID_params_cnn.py --epochs 300 --batch-size 32```<br>
+Train CNN model with your own arguments<br>
+```python visemeID/train_visemeID_params_cnn.py --train-input-data-dir path/to/train_visemeID --test-input-data-dir path/to/test_viseme_ID --train-eyes-data-dir path/to/train_eyes_param --test-eyes-data-dir path/to/test_eyes_param --train-mouth-data-dir path/to/train_mouth_param --test-mouth-data-dir path/to/test_mouth_param --epochs 300 --batch-size 32 --resume-training False --save-model-dir path/to/model/ --load-model-dir path/to/model/```
+
+#### Wave2Vec2.0 Method
+Train CNN model with default argument<br>
+Train CNN model, in which the input takes additional previously predicted animation params, with default argument<br>
+Train CNN model with self-attention layers<br>
 
 
