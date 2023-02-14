@@ -10,8 +10,15 @@ from scipy.special import softmax
 #import progressbar
 import argparse
 
-#append phones. dir: directory of phones data folder
+
 def append_txt_data(dir):
+    """
+    Reads all text files in a directory and appends their contents into a single numpy array.
+
+    :param dir: str - path to the directory containing the text files
+    :return: A numpy array containing the concatenated text data from all the text files.
+    :raises AssertionError: If the input directory does not exist or is not a directory.
+    """
     assert os.path.isdir(dir), '%s is not a valid directory' % dir
     txt_data = []
     for fname in sorted(os.listdir(dir)):
@@ -21,8 +28,15 @@ def append_txt_data(dir):
     print("txt_data_shape: %(s)s" % {'s': txt_data.shape})
     return txt_data
 
-#phones to Viseme ID. dir: directory of phones data folder
+
 def make_viseme_ID_dataset(dir):
+    """
+    Reads in phonemes text files in the specified directory, converts the phonemes to viseme IDs,
+    and saves the resulting viseme ID data to a numpy file.
+
+    :param dir: str - path to the directory containing the text files
+    :raises AssertionError: If the input directory does not exist or is not a directory.
+    """
     if os.path.exists(os.path.join(dir, 'Viseme_ID.npy')) is True:
         os.remove(os.path.join(dir, 'Viseme_ID.npy'))
 
@@ -44,9 +58,15 @@ def make_viseme_ID_dataset(dir):
 
 
 
-#####
-#append animation params, wave2vec features. dir: directory of eyes/mouth animation params data or wave2vec data folder
 def append_np_data(dir):
+    """
+    Load and concatenate all numpy arrays for eyes/mouth animation params and Wave2vec features in the specified
+    directory into a single array and save it to a file.
+
+    :param dir: str - path to the directory containing the numpy files.
+    :return: The concatenated numpy array.
+    :raises AssertionError: If the input directory does not exist or is not a directory.
+    """
     assert os.path.isdir(dir), '%s is not a valid directory' % dir
     np_data = np.array([], dtype=np.int64)
     file_name = os.path.basename(dir)
@@ -65,15 +85,27 @@ def append_np_data(dir):
     return np_data
 
 
-#calculate the softmax of wave2vec data.  dir: directory of wave2vec.npy file
+
 def softmax_data(file_path):
+    """
+    Calculates the softmax function of Wave2vec data.
+    :param dir: str - path to the input wave2vec.npy file.
+    """
     file_name = os.path.basename(file_path)
     data_softmax = softmax(np.load(file_path))
     np.save(file_path[:-4] + '_softmax.npy', data_softmax )
     print('softmax_%(n)s saved in path %(s)s.' % {'n': file_name[:-4], 's': os.path.dirname(file_path)})
 
-#dir: directory of viseme_ID.npy, wave2vec.npy, eyes.npy or mouth.npy file
+
 def make_train_test_dataset(file_path):
+    """
+    Splits and saves the data in a .npy file into a training set and a test set respectively in the same directory
+    as the original file. The size of the training set is 80% of the original data, and the test set contains the
+    remaining 20%.
+
+    :param dir: str - path to the .npy file containing the data to be split. e.g. viseme_ID.npy,
+    wave2vec_softmax.npy, scaled_eyes.npy or scaled_mouth.npy file
+    """
     assert os.path.isfile(file_path), '%s is not a valid file name' % file_path
     dir, file_name = os.path.split(file_path)
     if os.path.exists(dir + '/train_' + file_name) is True:
@@ -93,8 +125,12 @@ def make_train_test_dataset(file_path):
     print('train and test %s generated.' % file_name[:-4])
 
 
-#dir: directory of eyes.npy or mouth.npy file
 def data_Normalization(file_path):
+    """
+    Normalize the data of the given file and save the scaled data in the same directory.
+
+    :param dir: str - path to the file containing the animation params data to be normalized
+    """
     assert os.path.isfile(file_path), '%s is not a valid file name' % file_path
     dir, file_name = os.path.split(file_path)
     if os.path.exists(dir + '/scaled_' + file_name) is True:
