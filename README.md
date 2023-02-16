@@ -51,6 +51,8 @@ or <br>
 ### Data processing
 Get viseme ID from phoneme data <br>
 ```python realtime_data_process.py make_viseme_ID_dataset -d data/phones/```<br>
+Generate CNN viseme ID input <br>
+```python realtime_data_process.py generate_cnn_input -d data/phones/viseme_ID.npy -t 8```<br>
 Process wave2vec features data <br>
 ```python realtime_data_process.py append_np_data -d data/wave2vec```<br>
 Calculate the softmax of Wave2vec data <br>

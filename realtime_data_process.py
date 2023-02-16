@@ -57,6 +57,21 @@ def make_viseme_ID_dataset(dir):
     print('viseme_ID_data saved in path %s' % dir)
 
 
+def generate_cnn_input(file_path, timestep=8):
+    """
+     Generates an input array for a CNN by horizontally stacking number of timesteps consecutive rows of viseme ID data.
+
+    :param dir: str - path to the input visme_ID.npy file.
+    """
+    file_name = os.path.basename(file_path)
+    X = np.load(file_path)
+    f = []
+    for i in range(X.shape[0]-timestep+1):
+        x = np.hstack(X[i:i+timestep])
+        f.append(x)
+    f = np.array(f)
+    np.save(file_path[:-4] + f'_{timestep}timesteps.npy', f)
+    print(f'{timestep}timesteps_{file_name[:-4]} saved in path {os.path.dirname(file_path)}.')
 
 def append_np_data(dir):
     """
@@ -145,14 +160,17 @@ def data_Normalization(file_path):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Run functions for processing data.')
-    parser.add_argument('function', type=str, choices=['append_txt_data', 'make_viseme_ID_dataset', 'append_np_data', 'softmax_data', 'make_train_test_dataset', 'data_Normalization'], help='Name of the function to run')
+    parser.add_argument('function', type=str, choices=['append_txt_data', 'make_viseme_ID_dataset', 'generate_cnn_input', 'append_np_data', 'softmax_data', 'make_train_test_dataset', 'data_Normalization'], help='Name of the function to run')
     parser.add_argument('-d', '--directory', type=str, required=True, help='Directory containing data')
+    parser.add_argument('-t', '--timestep', type=int, default=8, help='Number of consecutive rows to stack horizontally (default=8)')
     args = parser.parse_args()
 
     if args.function == 'append_txt_data':
         append_txt_data(args.directory)
     elif args.function == 'make_viseme_ID_dataset':
         make_viseme_ID_dataset(args.directory)
+    elif args.function == 'generate_cnn_input':
+        generate_cnn_input(args.directory, timestep=args.timestep)
     elif args.function == 'append_np_data':
         append_np_data(args.directory)
     elif args.function == 'softmax_data':
@@ -161,6 +179,21 @@ if __name__ == '__main__':
         make_train_test_dataset(args.directory)
     elif args.function == 'data_Normalization':
         data_Normalization(args.directory)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

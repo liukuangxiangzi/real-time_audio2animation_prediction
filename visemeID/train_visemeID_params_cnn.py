@@ -19,9 +19,7 @@ def configure_logging():
 def load_data(train_input_data_dir, test_input_data_dir, train_eyes_data_dir, test_eyes_data_dir,
               train_mouth_data_dir, test_mouth_data_dir):
     X_train = np.load(train_input_data_dir)
-    x_train = X_train.reshape(X_train.shape[0], 8, X_train.shape[1])
-    print("***", x_train.shape)
-    x_train = x_train.reshape(2416, 8, 13)
+    x_train = X_train.reshape(X_train.shape[0], 8, 13)
     print("*****", x_train.shape)
     X_test = np.load(test_input_data_dir)
     x_test = X_test.reshape(X_train.shape[0], 8, 13)
@@ -112,7 +110,25 @@ def main():
 if __name__ == '__main__':
     main()
 
+###test insert x8#
+import numpy as np
 
+
+def tile_frames(arr, tile_size=8, step_size=1):
+    n_frames = arr.shape[0]
+    n_tiles = (n_frames - tile_size) // step_size + 1
+    tiled_arr = np.zeros((n_tiles, tile_size, arr.shape[1]))
+
+    for i in range(n_tiles):
+        start = i * step_size
+        end = start + tile_size
+        tiled_arr[i] = arr[start:end]
+
+    return tiled_arr
+
+tiled_arr = tile_frames(arr, tile_size=8, step_size=1)
+
+###
 # #tensorboard
 # #tensorboard --logdir /Users/liukuangxiangzi/PycharmProjects/PhonemeNet/logs/fit/ --host=127.0.0.1
 # log_dir = os.path.join(
