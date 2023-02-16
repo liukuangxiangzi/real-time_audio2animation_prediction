@@ -63,7 +63,7 @@ def define_model(x_train, resume_training, load_model_dir):
 #tensorboard --logdir /Users/liukuangxiangzi/PycharmProjects/PhonemeNet/logs/fit/ --host=127.0.0.1
 def train_model(model, x_train, y_mouth_train, y_eye_train, x_test, y_mouth_test, y_eye_test, epochs, batch_size, log_dir, save_model_dir):
     tbCallBack = TensorBoard(log_dir=log_dir, histogram_freq=0, write_graph=True, write_images=True)
-    logging.info('Starting training')
+    logging.info('Starting VisemeID MLP model training')
     history = model.fit(x=x_train,
                         y=[y_mouth_train, y_eye_train],
                         validation_data=(x_test, [y_mouth_test, y_eye_test]),

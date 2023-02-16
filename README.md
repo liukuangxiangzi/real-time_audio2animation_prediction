@@ -49,25 +49,38 @@ or <br>
 - Download animation parameters from [animation-params](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git).
 - Put 3 downloaded folders to data/.
 ### Data processing
+#### Viseme ID
 Get viseme ID from phoneme data <br>
 ```python realtime_data_process.py make_viseme_ID_dataset -d data/phones/```<br>
 Generate CNN viseme ID input <br>
 ```python realtime_data_process.py generate_cnn_input -d data/phones/viseme_ID.npy -t 8```<br>
-Process wave2vec features data <br>
+Divide train and test datase for viseme ID (MLP) <br>
+```python realtime_data_process.py make_train_test_dataset -d data/phones/viseme_ID.npy```<br>
+Divide train and test dataset for viseme ID (CNN) <br>
+```python realtime_data_process.py make_train_test_dataset -d data/phones/viseme_ID_8timesteps.npy```<br>
+#### Wave2vec features
+Load and concatenate all Wave2vec features numpy files into a single numpy file <br>
 ```python realtime_data_process.py append_np_data -d data/wave2vec```<br>
 Calculate the softmax of Wave2vec data <br>
 ```python realtime_data_process.py softmax_data -d data/wave2vec/wave2vec.npy```<br>
-Process animation params for eyes and mouth <br>
+Divide train and test dataset for Wave2vec feature <br>
+```python realtime_data_process.py make_train_test_dataset -d data/wave2vec/wave2vec_softmax.npy```<br>
+#### Animation params
+Load and concatenate all eyes/mouth animation params numpy files into a single numpy file <br>
 ```python realtime_data_process.py append_np_data -d data/animation-params/eyes```<br>
 ```python realtime_data_process.py append_np_data -d data/animation-params/mouth```<br>
 Normalize animation params for eyes and mouth <br>
 ```python realtime_data_process.py data_Normalization -d data/animation-params/eyes/eyes.npy```<br>
 ```python realtime_data_process.py data_Normalization -d data/animation-params/mouth/mouth.npy```<br>
-Divide train and test datase for viseme ID, Wave2vec feature and eyes/mouth animation params <br>
-```python realtime_data_process.py make_train_test_dataset -d data/phones/viseme_ID.npy```<br>
-```python realtime_data_process.py make_train_test_dataset -d data/wave2vec/wave2vec_softmax.npy```<br>
-```python realtime_data_process.py make_train_test_dataset -d data/animation-params/mouth/scaled_mouth.npy```<br>
+Generate CNN eyes/mouth animation params lable <br>
+```python realtime_data_process.py generate_cnn_lable -d data/animation-params/eyes/scaled_eye.npy -t 8```
+```python realtime_data_process.py generate_cnn_lable -d data/animation-params/mouth/scaled_mouth.npy -t 8```
+Divide train and test dataset for normalized eyes/mouth animation params <br>
 ```python realtime_data_process.py make_train_test_dataset -d data/animation-params/eyes/scaled_eyes.npy```<br>
+```python realtime_data_process.py make_train_test_dataset -d data/animation-params/mouth/scaled_mouth.npy```<br>
+Divide train and test dataset for CNN eyes/mouth animation params <br>
+```python realtime_data_process.py make_train_test_dataset -d data/animation-params/eyes/scaled_eyes_8timesteps.npy```<br>
+```python realtime_data_process.py make_train_test_dataset -d data/animation-params/mouth/scaled_mouth_8timesteps.npy```<br>
 
 ### Training
 #### viseme IDs Method
@@ -78,7 +91,7 @@ Train MLP model with your own arguments<br>
 Train CNN model with default arguments<br>
 ```python visemeID/train_visemeID_params_cnn.py --epochs 300 --batch-size 32```<br>
 Train CNN model with your own arguments<br>
-```python visemeID/train_visemeID_params_cnn.py --train-input-data-dir path/to/train_visemeID --test-input-data-dir path/to/test_viseme_ID --train-eyes-data-dir path/to/train_eyes_param --test-eyes-data-dir path/to/test_eyes_param --train-mouth-data-dir path/to/train_mouth_param --test-mouth-data-dir path/to/test_mouth_param --epochs 300 --batch-size 32 --resume-training False --save-model-dir path/to/model/ --load-model-dir path/to/model/```
+```python visemeID/train_visemeID_params_cnn.py --train-input-data-dir path/to/train_visemeID --test-input-data-dir path/to/test_viseme_ID --train-eyes-data-dir path/to/train_eyes_param --test-eyes-data-dir path/to/test_eyes_param --train-mouth-data-dir path/to/train_mouth_param --test-mouth-data-dir path/to/test_mouth_param --timestep 8 --epochs 300 --batch-size 32 --resume-training False --save-model-dir path/to/model/ --load-model-dir path/to/model/```
 
 #### Wave2Vec2.0 Method
 Train CNN model with default argument<br>
