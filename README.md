@@ -87,15 +87,17 @@ Divide train and test dataset for CNN eyes/mouth animation params <br>
 Train MLP model with default arguments<br>
 ```python visemeID/train_visemeID_params_mlp.py --epochs 300 --batch-size 32```<br>
 Train MLP model with your own arguments<br>
-```python visemeID/train_visemeID_params_mlp.py --train-input-data-dir path/to/train_visemeID --test-input-data-dir path/to/test_viseme_ID --train-eyes-data-dir path/to/train_eyes_param --test-eyes-data-dir path/to/test_eyes_param --train-mouth-data-dir path/to/train_mouth_param --test-mouth-data-dir path/to/test_mouth_param --epochs 300 --batch-size 32 --resume-training False --save-model-dir path/to/model/ --load-model-dir path/to/model/```
+```python visemeID/train_visemeID_params_mlp.py --train-input-data-dir path/to/train_visemeID --test-input-data-dir path/to/test_viseme_ID --train-eyes-data-dir path/to/train_eyes_param --test-eyes-data-dir path/to/test_eyes_param --train-mouth-data-dir path/to/train_mouth_param --test-mouth-data-dir path/to/test_mouth_param --epochs 300 --batch-size 32 --resume-training False --save-model-dir path/to/model/ --load-model-dir path/to/model/```<br>
 Train CNN model with default arguments<br>
-```python visemeID/train_visemeID_params_cnn.py --epochs 300 --batch-size 32```<br>
+```python visemeID/train_visemeID_params_cnn.py --timestep 8 --epochs 300 --batch-size 32```<br>
 Train CNN model with your own arguments<br>
-```python visemeID/train_visemeID_params_cnn.py --train-input-data-dir path/to/train_visemeID --test-input-data-dir path/to/test_viseme_ID --train-eyes-data-dir path/to/train_eyes_param --test-eyes-data-dir path/to/test_eyes_param --train-mouth-data-dir path/to/train_mouth_param --test-mouth-data-dir path/to/test_mouth_param --timestep 8 --epochs 300 --batch-size 32 --resume-training False --save-model-dir path/to/model/ --load-model-dir path/to/model/```
+```python visemeID/train_visemeID_params_cnn.py --train-input-data-dir path/to/train_visemeID --test-input-data-dir path/to/test_viseme_ID --train-eyes-data-dir path/to/train_eyes_param --test-eyes-data-dir path/to/test_eyes_param --train-mouth-data-dir path/to/train_mouth_param --test-mouth-data-dir path/to/test_mouth_param --timestep 8 --epochs 300 --batch-size 32 --resume-training False --save-model-dir path/to/model/ --load-model-dir path/to/model/```<br>
 
 #### Wave2Vec2.0 Method
 Train CNN model with default argument<br>
+```python w2v/train_w2v_params_cnn.py --epochs 300 --batch-size 16```<br>
 Train CNN model, in which the input takes additional previously predicted animation params, with default argument<br>
+```python w2v/train_w2v_params_cnn_previousParams.py --epochs 300 --batch-size 16```
 Train CNN model with self-attention layers<br>
-
+```python w2v/train_w2v_params_cnn_selfattention.py --epochs 300 --batch-size 16```
 
