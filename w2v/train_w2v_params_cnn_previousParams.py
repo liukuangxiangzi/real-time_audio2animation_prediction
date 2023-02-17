@@ -87,11 +87,11 @@ def define_model(x_train, resume_training, load_model_dir):
     return model
 
 
-def train_model(model, x_train, y_mouth_train, y_eye_train, x_test, y_mouth_test, y_eye_test, epochs, batch_size, log_dir, save_model_dir):
-    tbCallBack = TensorBoard(log_dir=log_dir, histogram_freq=0, write_graph=True, write_images=True)
+def train_model(model, x_train, y_mouth_train, y_eye_train, x_test, y_mouth_test, y_eye_test, epochs, batch_size, save_model_dir):
     logging.info('Starting Wave2vec CNN_previous_params model training')
 
     batch_per_epoch = int(x_train.shape[0] / batch_size)
+    batch_per_epoch_val = int(x_test.shape[0] / batch_size)
     for epoch in range(0, epochs):
         for j in range(batch_per_epoch):
             batch_x = x_train[j * batch_size:(j + 1) * batch_size]
@@ -107,6 +107,22 @@ def train_model(model, x_train, y_mouth_train, y_eye_train, x_test, y_mouth_test
                 loss, loss_m, loss_e, acc_m, acc_e = model.train_on_batch(batch_x, [batch_y_m, batch_y_e])
             print('>%d, %d/%d, loss=%.3f, loss_m=%.3f, loss_e=%.3f, acc_m=%.3f, acc_e=%.3f' % (
             epoch + 1, j + 1, batch_per_epoch, loss, loss_m, loss_e, acc_m, acc_e))
+        for k in range(batch_per_epoch_val):
+            batch_x_val = x_test[k * batch_size:(k + 1) * batch_size]
+            batch_y_e_val = y_eye_test[k * batch_size:(k + 1) * batch_size]
+            batch_y_m_val = y_mouth_test[k * batch_size:(k + 1) * batch_size]
+            if k == 0:
+                loss_val, loss_m_val, loss_e_val, acc_m_val, acc_e_val = model.train_on_batch(batch_x_val, [batch_y_m_val, batch_y_e_val])
+            else:
+                last_y_m_val, last_y_e_val = model.predict(x_test[(k - 1) * batch_size:k * batch_size])
+                last_y_concat_val = np.concatenate((last_y_m_val, last_y_e_val), axis=-1)
+                last_y_pca_val = pca_decomposition(last_y_concat_val)
+                batch_x_val[:, 0, :] = last_y_pca_val[:, :]
+                loss_val, loss_m_val, loss_e_val, acc_m_val, acc_e_val = model.train_on_batch(batch_x_val, [batch_y_m_val, batch_y_e_val])
+            print('>%d, %d/%d, val_loss=%.3f, val_loss_m=%.3f, val_loss_e=%.3f, val_acc_m=%.3f, val_acc_e=%.3f' % (
+                epoch + 1, k + 1, batch_per_epoch_val, loss_val, loss_m_val, loss_e_val, acc_m_val, acc_e_val))
+
+
 
     plot_model(model, to_file='model_w2v_params_cnn_previousParams_plot.png', show_shapes=True, show_layer_names=True)
     # Save model to file
@@ -136,9 +152,9 @@ def main():
                                                                                   args.train_mouth_data_dir,
                                                                                   args.test_mouth_data_dir)
     model = define_model(x_train, args.resume_training, args.load_model_dir)
-    log_dir = os.path.join('logs', 'fit', datetime.now().strftime('%Y%m%d-%H%M%S'))
+    #log_dir = os.path.join('logs', 'fit', datetime.now().strftime('%Y%m%d-%H%M%S'))
     save_model_dir = args.save_model_dir
-    train_model(model, x_train, y_mouth_train, y_eye_train, x_test, y_mouth_test, y_eye_test, args.epochs, args.batch_size, log_dir, save_model_dir)
+    train_model(model, x_train, y_mouth_train, y_eye_train, x_test, y_mouth_test, y_eye_test, args.epochs, args.batch_size, save_model_dir)
 
 if __name__ == '__main__':
     main()
