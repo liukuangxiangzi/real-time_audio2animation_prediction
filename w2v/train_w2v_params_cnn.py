@@ -95,12 +95,12 @@ def train_model(model, x_train, y_mouth_train, y_eye_train, x_test, y_mouth_test
                         callbacks=[tbCallBack],
                         shuffle=True)
     # Plot model structure
-    plot_model(model, to_file='model_visemeID_params_cnn_plot.png', show_shapes=True, show_layer_names=True)
+    plot_model(model, to_file='model_w2v_params_cnn_plot.png', show_shapes=True, show_layer_names=True)
     # Log loss to console and file
     logging.info('Training loss: m_out={:.4f}, e_out={:.4f}'.format(history.history['out_mouth_loss'][-1], history.history['out_eye_loss'][-1]))
     logging.info('Validation loss: m_out={:.4f}, e_out={:.4f}'.format(history.history['val_out_mouth_loss'][-1], history.history['val_out_mouth_loss'][-1]))
     # Save model to file
-    model.save(os.path.join(save_model_dir, 'visemeID_cnn_epoch{}_bs{}.h5'.format(epochs, batch_size)))
+    model.save(os.path.join(save_model_dir, 'w2v_cnn_epoch{}_bs{}.h5'.format(epochs, batch_size)))
     logging.info('Model saved to {}'.format(save_model_dir))
 
 def main():
@@ -114,7 +114,7 @@ def main():
     parser.add_argument('--epochs', type=int, default=300, help='number of epochs to train for')
     parser.add_argument('--batch-size', type=int, default=16, help='batch size for training')
     parser.add_argument('--resume-training', type=bool, default=False, help='whether to resume training from a saved model')
-    parser.add_argument('--save-model-dir', type=str, default='visemeID/model/', help='directory where trained model will be saved')
+    parser.add_argument('--save-model-dir', type=str, default='w2v/model/', help='directory where trained model will be saved')
     parser.add_argument('--load-model-dir', type=str, default=None, help='path to trained model to resume training from')
     args = parser.parse_args()
 
