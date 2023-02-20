@@ -33,10 +33,10 @@ Note: Make sure FaceAnimationRenderer.py is in the root directory.
 #### 3. Download the animation model folder from [animation_model](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put the folder to the root directory.
 #### 4. Prepare data and trained model:<br>
 #### Wave2Vec2.0 Method
-- download the animation parameters prediction models from [model1](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put all 4 files to w2v/model/.
-- download the animation parameters of the eyes and mouth [model2](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put all 2 files to data/. They are used for the unnormalization.
+- download the animation parameters prediction models from [w2v_params_sofmax_1bnsig-2sig-1linear.h5](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put all 4 files to w2v/model/.
+- download the animation parameters of the eyes [eye_31_32_1195.npy](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git) and mouth [mouth_31_32_1195.npy](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put all 2 files to data/. They are used for the unnormalization.
 #### Viseme IDs Method
-- download the viseme IDs prediction model and the animation parameters prediction model from [model3](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put the files to visemeID/model/.
+- download the viseme IDs prediction model from [logmel_viseme_cnn_ep50_bs32_nocenter.h5](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git) and the animation parameters prediction model from [viseme_params_cnn_ep400_31_32_1188.h5](https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git), put the files to visemeID/model/.
 #### 5. Run command line:<br>
 ```python realtime_w2v_animation_render.py w2v/model/model_name.h5``` <br>
 or <br>
