@@ -30,13 +30,13 @@ and add the FFmpeg binary directory to path.<br>
 #### 2. Download this repository to your local machine <br>
 ```git clone https://vigitlab.fe.hhi.de/liu/cvgrealtimeaudiovisemeprediction.git ```<br>
 Note: Make sure FaceAnimationRenderer.py is in the root directory.
-#### 3. Download the animation model folder from [animation_model](\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\FaceModel), put the folder to the root directory.
+#### 3. Download the animation model folder from `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\FaceModel`, put the folder to the root directory.
 #### 4. Prepare data and trained model:<br>
 #### Wave2Vec2.0 Method
-- download the animation parameters prediction models from [w2v_model](\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\w2v\model), put all 4 files to w2v/model/.
-- download the animation parameters of the eyes [eye_31_32_1195.npy](\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\data) and mouth [mouth_31_32_1195.npy](\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\data), put all 2 files to data/. They are used for the unnormalization.
+- download the animation parameters prediction models from `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\w2v\model`, put all 4 files to `w2v/model/`.
+- download the animation parameters of the eyes `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\data\eye_31_32_1195.npy` and mouth `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\data\mouth_31_32_1195.npy`, put all 2 files to `data/`. They are used for the unnormalization.
 #### Viseme IDs Method
-- download the viseme IDs prediction model from [visemeID_model](\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\visemeID\model) and the animation parameters prediction model from [viseme_params_cnn_ep400_31_32_1188.h5](\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\visemeID\model\viseme_params_cnn_ep400_31_32_1188.h5), put the file to visemeID/model/.
+- download the viseme IDs prediction model from `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\visemeID\model\logmel_viseme_cnn_ep50_bs32_nocenter.h5` and the animation parameters prediction model from `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\visemeID\model\viseme_params_cnn_ep400_31_32_1188.h5`, put the file to `visemeID/model/`.
 #### 5. Run command line:<br>
 ```python realtime_w2v_animation_render.py w2v/model/model_name.h5``` <br>
 or <br>
@@ -45,9 +45,9 @@ or <br>
 
 ## Train
 ### Data used to train
-- Download the phoneme from [phones](\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\data\phones), Wav2Vec 2.0 features from [wave2vec](\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\data\wave2vec).
-- Download animation parameters from [animation-params](\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\data\animation-params).
-- Put 3 downloaded folders to data/.
+- Download the phoneme from `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\data\phones`, Wav2Vec 2.0 features from `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\data\wave2vec`.
+- Download animation parameters from `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\data\animation-params`.
+- Put 3 downloaded folders to `data/`.
 ### Data processing
 #### Viseme ID
 Get viseme ID from phoneme data <br>
