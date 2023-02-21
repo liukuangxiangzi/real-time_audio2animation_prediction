@@ -32,7 +32,7 @@ and add the FFmpeg binary directory to path.<br>
 Note: Make sure FaceAnimationRenderer.py is in the root directory.
 #### 3. Download the animation model folder from `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\FaceModel`, put the folder to the root directory.
 #### 4. Prepare data and trained model:<br>
-#### Wave2Vec2.0 Method
+#### Wav2Vec2.0 Method
 - download the animation parameters prediction models from `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\w2v\model`, put all 4 files to `w2v/model/`.
 - download the animation parameters of the eyes `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\data\eye_31_32_1195.npy` and mouth `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\data\mouth_31_32_1195.npy`, put all 2 files to `data/`. They are used for the unnormalization.
 #### Viseme IDs Method
@@ -45,7 +45,7 @@ or <br>
 
 ## Train
 ### Data used to train
-- Download the phoneme from `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\data\phones`, Wav2Vec 2.0 features from `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\data\wave2vec`.
+- Download the phoneme from `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\data\phones`, Wav2Vec 2.0 features from `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\data\wav2vec`.
 - Download animation parameters from `\\hhi.de\abteilung\VIT\VIT-CVG-Ablage\personal\Wolfgang\CVGRealtimeAudio2AnimationPrediction\data\animation-params`.
 - Put 3 downloaded folders to `data/`.
 ### Data processing
@@ -58,13 +58,13 @@ Divide train and test datase for viseme ID (MLP) <br>
 ```python realtime_data_process.py make_train_test_dataset -d data/phones/viseme_ID.npy```<br>
 Divide train and test dataset for viseme ID (CNN) <br>
 ```python realtime_data_process.py make_train_test_dataset -d data/phones/viseme_ID_8timesteps.npy```<br>
-#### Wave2vec features
-Load and concatenate all Wave2vec features numpy files into a single numpy file <br>
-```python realtime_data_process.py append_np_data -d data/wave2vec```<br>
-Calculate the softmax of Wave2vec data <br>
-```python realtime_data_process.py softmax_data -d data/wave2vec/wave2vec.npy```<br>
-Divide train and test dataset for Wave2vec feature <br>
-```python realtime_data_process.py make_train_test_dataset -d data/wave2vec/wave2vec_softmax.npy```<br>
+#### Wav2vec features
+Load and concatenate all Wav2vec features numpy files into a single numpy file <br>
+```python realtime_data_process.py append_np_data -d data/wav2vec```<br>
+Calculate the softmax of Wav2vec data <br>
+```python realtime_data_process.py softmax_data -d data/wav2vec/wav2vec.npy```<br>
+Divide train and test dataset for Wav2vec feature <br>
+```python realtime_data_process.py make_train_test_dataset -d data/wav2vec/wav2vec_softmax.npy```<br>
 #### Animation params
 Load and concatenate all eyes/mouth animation params numpy files into a single numpy file <br>
 ```python realtime_data_process.py append_np_data -d data/animation-params/eyes```<br>
@@ -91,7 +91,7 @@ Train CNN model with default arguments<br>
 Train CNN model with your own arguments<br>
 ```python visemeID/train_visemeID_params_cnn.py --train-input-data-dir path/to/train_visemeID --test-input-data-dir path/to/test_viseme_ID --train-eyes-data-dir path/to/train_eyes_param --test-eyes-data-dir path/to/test_eyes_param --train-mouth-data-dir path/to/train_mouth_param --test-mouth-data-dir path/to/test_mouth_param --timestep 8 --epochs 300 --batch-size 32 --resume-training False --save-model-dir path/to/model/ --load-model-dir path/to/model/```<br>
 
-#### Wave2Vec2.0 Method
+#### Wav2Vec2.0 Method
 Train CNN model with default argument<br>
 ```python w2v/train_w2v_params_cnn.py --epochs 300 --batch-size 16```<br>
 Train CNN model, in which the input takes additional previously predicted animation params, with default argument<br>
